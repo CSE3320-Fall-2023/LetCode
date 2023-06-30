@@ -13,6 +13,14 @@ enum {
     PROC_WAIT_TO_RECV
 };
 
+enum COLOR
+{
+    BLUE = 0,
+    GREEN,
+    YELLOW,
+    PURPLE
+};
+
 struct process{
     int pid;
     int status;
@@ -20,6 +28,7 @@ struct process{
     void *sp, *mepc;  /* process context = stack pointer (sp)
                        * + machine exception program counter (mepc) */
     /* Student's code goes here to add to the process control block (priority / scheduler)*/
+    enum COLOR color;
 };
 
 #define MAX_NPROCESS  16
