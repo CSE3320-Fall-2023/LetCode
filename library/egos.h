@@ -1,5 +1,14 @@
 #pragma once
 
+enum COLOR
+{
+    BLUE = 0,
+    GREEN,
+    YELLOW,
+    PURPLE,
+    MAX_COLOR
+};
+
 struct earth {
     /* CPU interface */
     int (*intr_enable)();
@@ -41,6 +50,11 @@ struct grass {
     void (*proc_free)(int pid);
     void (*proc_set_ready)(int pid);
     int  (*proc_get_pid)();
+
+    enum COLOR (*proc_get_color)(int pid);
+
+    void (*proc_set_color)(int pid, enum COLOR);
+
     struct process *(*proc_get_proc_set)();
 
     long long int (*gettime)();
@@ -66,7 +80,7 @@ extern struct grass *grass;
 #define APPS_ARG           0x80000000  /* 1KB    app main() argc, argv */
 #define APPS_SIZE          0x00003000  
 #define APPS_ENTRY         0x08005000  /* 12KB   app code+data         */
-#define GRASS_SIZE         0x00002800
+#define GRASS_SIZE         0x00002900
 #define GRASS_ENTRY        0x08002800  /* 8KB    grass code+data       */
                                        /* 12KB   earth data            */
                                        /* earth code is in QSPI flash  */

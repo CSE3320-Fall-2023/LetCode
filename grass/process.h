@@ -13,14 +13,6 @@ enum {
     PROC_WAIT_TO_RECV
 };
 
-enum COLOR
-{
-    BLUE = 0,
-    GREEN,
-    YELLOW,
-    PURPLE
-};
-
 struct process{
     int pid;
     int status;
@@ -48,6 +40,8 @@ void proc_set_ready (int);
 void proc_set_running (int);
 void proc_set_runnable (int);
 int  proc_get_pid( );
+enum COLOR proc_get_color( int );
+void proc_set_color( int pid, enum COLOR );
 struct process * proc_get_proc_set( );
 
 void ctx_entry(void);

@@ -57,6 +57,7 @@ int proc_alloc() {
         if (proc_set[i].status == PROC_UNUSED) {
             proc_set[i].pid = ++proc_nprocs;
             proc_set[i].status = PROC_LOADING;
+            proc_set[i].color = BLUE;
             return proc_nprocs;
         }
 
@@ -84,3 +85,35 @@ void proc_set_running(int pid) { proc_set_status(pid, PROC_RUNNING); }
 void proc_set_runnable(int pid) { proc_set_status(pid, PROC_RUNNABLE); }
 int  proc_get_pid( ){ return curr_pid; }
 struct process * proc_get_proc_set( ){ return &proc_set[0];}
+
+void proc_set_color( int pid, enum COLOR newcolor )
+{
+  if( pid >= 0 && pid < MAX_NPROCESS )
+  {
+    if( newcolor < MAX_COLOR )
+    {
+      proc_set[pid].color = newcolor;
+    }
+    else 
+    {
+      printf("ERROR: Invalid color provided\n");
+    }
+  }
+  else
+  {
+    printf("ERROR: Invalid pid provided\n");
+  }
+}
+
+enum COLOR proc_get_color( int pid )
+{
+  if( pid >= 0 && pid < MAX_NPROCESS )
+  {
+    return proc_set[pid].color;
+  }
+  else
+  {
+    printf("ERROR: Invalid pid provided\n");
+    return MAX_COLOR;
+  }
+}

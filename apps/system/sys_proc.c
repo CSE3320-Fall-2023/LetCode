@@ -83,6 +83,7 @@ static int app_spawn(struct proc_request *req) {
 
     elf_load(app_pid, app_read, argc, (void**)req->argv);
     grass->proc_set_ready(app_pid);
+    grass->proc_set_color( app_pid, BLUE );
     return 0;
 }
 
@@ -100,4 +101,6 @@ static void sys_spawn(int base) {
     sys_proc_base = base;
     elf_load(pid, sys_proc_read, 0, NULL);
     grass->proc_set_ready(pid);
+    grass->proc_set_color(pid, BLUE);
+
 }

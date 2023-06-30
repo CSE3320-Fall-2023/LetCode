@@ -31,6 +31,8 @@ int main() {
     grass->proc_set_ready = proc_set_ready;
     grass->proc_get_pid = proc_get_pid;
     grass->proc_get_proc_set = proc_get_proc_set;
+    grass->proc_get_color = proc_get_color;
+    grass->proc_set_color = proc_set_color;
 
     grass->sys_exit = sys_exit;
     grass->sys_send = sys_send;
