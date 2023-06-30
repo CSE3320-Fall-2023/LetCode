@@ -18,4 +18,13 @@ int main( int argc, char *argv[] )
     setcolor( getpid(), PURPLE ); 
 
     printf ("My color is %s\n", ColorEnumToString[getcolor( getpid() )]);
+
+    setcolor( -1, BLUE );
+
+    setcolor( 1, (enum COLOR)65535 );
+
+    enum COLOR ret;
+    
+    ret = getcolor( -1 );
+    ret = getcolor( 6565 );
 }
