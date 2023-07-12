@@ -58,6 +58,10 @@ int proc_alloc() {
             proc_set[i].pid = ++proc_nprocs;
             proc_set[i].status = PROC_LOADING;
             proc_set[i].color = BLUE;
+#ifdef DEMO
+            proc_set[i].priority = priority;
+            insertQueue( proc_set[i].pid, priority );
+#endif
             return proc_nprocs;
         }
 

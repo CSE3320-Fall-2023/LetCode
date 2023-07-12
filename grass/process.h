@@ -21,6 +21,7 @@ struct process{
                        * + machine exception program counter (mepc) */
     /* Student's code goes here to add to the process control block (priority / scheduler)*/
     enum COLOR color;
+    int priority;  /* process priority from 1 to 99 */
 };
 
 #define MAX_NPROCESS  16

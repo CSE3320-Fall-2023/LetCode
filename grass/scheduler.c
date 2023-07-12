@@ -72,8 +72,13 @@ void ctx_entry() {
 }
 
 static void proc_yield() {
+
+
+
     /* Find the next runnable process */
     int next_idx = -1;
+    #define ROUND_ROBIN
+    #ifdef ROUND_ROBIN
     for (int i = 1; i <= MAX_NPROCESS; i++) {
         int s = proc_set[(proc_curr_idx + i) % MAX_NPROCESS].status;
         if (s == PROC_READY || s == PROC_RUNNING || s == PROC_RUNNABLE) {
@@ -81,6 +86,51 @@ static void proc_yield() {
             break;
         }
     }
+    #else
+
+    // proc_set[] is the array of process control blocks.
+    // 
+    // Search all the current processes in the proc_set and pick the next one 
+    // to run.
+    //
+    // next_idx is the index into proc_set of the next process to run.
+    
+    int winning_pid = 9999;
+    int winning_idx = -1;
+    int winning_priority = 100;
+
+    for (int i = 1; i <= MAX_NPROCESS; i++) {
+      if( proc_set[i].priority <= winning_priority && proc_set[i].pid < winning_pid )
+      {
+        int s = proc_set[(proc_curr_idx + i) % MAX_NPROCESS].status;
+        if (s == PROC_READY || s == PROC_RUNNING || s == PROC_RUNNABLE) 
+        {   
+           winning_idx = i;
+           winning_priority = proc_set[i].priority;
+           winning_pid = proc_set[i].pid;
+        }
+      }
+    }
+
+
+    // Assumption there is 1 run queue and 10 priority queues holding the pid of the processes in 
+    //     proc_set
+    // if run queue is empty copy all processes pids from P1 queue into run queue
+    //
+    // take the current running process and reset it back into original priority queue
+    //
+    // while there are process pids in the run queue select the process pid at the front of the queue
+    //        search proc_set[] to find at which index that pid is at and set next_idx = to that index in proc_set
+    //
+    // if the run queue is empty
+    //      move all process pids up a queue level so P2 moves to P1, P3 moves P2
+    // 
+
+
+    
+    next_idx = winning_idx;
+
+    #endif
 
     if (next_idx == -1) FATAL("proc_yield: no runnable process");
     if (curr_status == PROC_RUNNING) proc_set_runnable(curr_pid);
